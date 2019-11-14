@@ -1,0 +1,8 @@
+/* 列表清除标识和内外边距 */
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+/*页面内容区域的宽度,所有内容总宽度一致*/
+.my-width{width:1200px;margin:0 auto;}
