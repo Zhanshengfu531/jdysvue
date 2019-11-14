@@ -18,7 +18,7 @@
                <b class="b-status" v-show="show"></b>
            </div>
            <div class="input-tip">
-              <span class="">{{tishi.tishi1}}</span>   
+              <span :style="ustyle">{{tishi.tishi1}}</span>   
            </div>
            <div class="from-item">
                <label for="">用户密码</label>
@@ -71,6 +71,9 @@
 export default {
   data() {
     return {
+      ustyle:{
+        color:"",
+      },
       show:false,
         uname:"",
         pwd:"",
@@ -96,8 +99,8 @@ export default {
       }else{
         var ua=/^[a-zA-Z0-9_-]{4,20}$/;
         if(!ua.test(this.uname)){
-           
-           this.tishi.tishi1="长度只能在4-20个字符之间"
+           this.ustyle.color="#f91";
+           this.tishi.tishi1="长度只能在4-20个字符之间";
         }else{
            this.tishi.tishi1=""
            this.show=true;
@@ -108,11 +111,16 @@ export default {
   watch:{
      uname(){
        this.show=false;
+       this.ustyle.color="";
+       this.tishi.tishi1="支持英文、数字、“-”、“_”的组合，4-20个字符";
      }
   }
 };
 </script>
 <style scoped>
+.show{
+  color: #f91;
+}
 .r-header {
   height: 110px;
   box-shadow: 0px 3px 10px #ddd;
