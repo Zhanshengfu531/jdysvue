@@ -13,10 +13,10 @@
       </ul>
       <ul class="fr">
         <li>
-          <a href="javascript:;">您好,请登录</a>
+          <router-link to="/login">您好,请登录</router-link>
         </li>
         <li>
-          <a href="javascript:;">免费注册</a>
+          <router-link to="/reg">免费注册</router-link>
         </li>
         <li class="spacer"></li>
         <li>

@@ -6,7 +6,7 @@
         <span>欢迎注册</span>
         <div class="r-flo">
           已有账号？
-          <a href>请登录></a>
+          <router-link to="/login">请登录></router-link>
         </div>
       </div>
     </div>
@@ -22,27 +22,27 @@
            </div>
            <div class="from-item">
                <label for="">用户密码</label>
-               <input type="password" placeholder="建议使用两种或两种以上字符组合">
-               <b class="b-status"></b>
+               <input type="password" placeholder="建议使用两种或两种以上字符组合" v-model="upwd" @focus="pwin" @blur="plost">
+               <b class="b-status" v-show="show1"></b>
            </div>
            <div class="input-tip">
-              <span class="">建议使用字母、数字和符号两种及以上的组合，8-20个字符</span>   
+              <span :style="pstyle">{{tishi.tishi2}}</span>   
            </div> 
            <div class="from-item">
                <label for="">确认密码</label>
-               <input type="password" placeholder="请再次输入密码">
-               <b class="b-status"></b>
+               <input type="password" placeholder="请再次输入密码" v-model="upwd1" @focus="tpwin" @blur="tplost">
+               <b class="b-status" v-show="show2"></b>
            </div>
            <div class="input-tip">
-              <span class="">请再次输入密码</span>   
+              <span :style="tpstyle">{{tishi.tishi3}}</span>   
            </div> 
            <div class="from-item">
                <label for="">用户手机</label>
-               <input type="text" placeholder="请输入手机号">
-               <b class="b-status"></b>
+               <input type="text" placeholder="请输入手机号" v-model="phone" @focus="phwin" @blur="phlost">
+               <b class="b-status" v-show="show3"></b>
            </div>
            <div class="input-tip">
-              <span class="">手机号码为11个字符</span>   
+              <span :style="phstyle">{{tishi.tishi4}}</span>   
            </div> 
            <button class="btn">立即注册</button>
        </div>
@@ -74,10 +74,22 @@ export default {
       ustyle:{
         color:"",
       },
+      pstyle:{
+        color:"",
+      },
+      tpstyle:{
+        color:"",
+      },
+      phstyle:{
+        color:"",
+      },
       show:false,
+      show1:false,
+      show2:false,
+      show3:false,
         uname:"",
-        pwd:"",
-        pwd1:"",
+        upwd:"",
+        upwd1:"",
         phone:"",
       tishi:{
         tishi1:"",
@@ -90,13 +102,10 @@ export default {
   methods: {
     uwin(){
       if(this.uname==""){
-      this.tishi.tishi1="支持英文、数字、“-”、“_”的组合，4-20个字符"
+      this.tishi.tishi1="建议使用字母、数字和符号两种及以上的组合，8-20个字符"
       }
     },
     ulost(){
-      if(this.uname==""){
-        this.tishi.tishi1=""
-      }else{
         var ua=/^[a-zA-Z0-9_-]{4,20}$/;
         if(!ua.test(this.uname)){
            this.ustyle.color="#f91";
@@ -105,15 +114,71 @@ export default {
            this.tishi.tishi1=""
            this.show=true;
         }
+    },
+    pwin(){
+      if(this.upwd==""){
+      this.tishi.tishi2="支持英文、数字、“-”、“_”的组合，4-20个字符"
       }
-    }
+    },
+    plost(){
+      var pa=/^[a-zA-Z0-9_-]{8,20}$/;
+        if(!pa.test(this.upwd)){
+           this.pstyle.color="#f91";
+           this.tishi.tishi2="长度只能在8-20个字符之间";
+        }else{
+           this.tishi.tishi2=""
+           this.show1=true;
+        }
+    },
+    tpwin(){
+      if(this.upwd1==""){
+      this.tishi.tishi3="请再次输入密码"
+      }
+    },
+    tplost(){
+        if(this.upwd!==this.upwd1){
+           this.tpstyle.color="#f91";
+           this.tishi.tishi3="两次密码输入不一致";
+        }else{
+           this.tishi.tishi3=""
+           this.show2=true;
+        }
+    },
+    phwin(){
+      if(this.phone==""){
+      this.tishi.tishi4="手机符号为11位"
+      }
+    },
+    phlost(){
+      var ph=/^[1][3,4,5,7,8][0-9]{9}$/;
+        if(!ph.test(this.phone)){
+           this.phstyle.color="#f91";
+           this.tishi.tishi4="格式不正确";
+        }else{
+           this.tishi.tishi4=""
+           this.show3=true;
+        }
+    },
   },
   watch:{
      uname(){
        this.show=false;
        this.ustyle.color="";
        this.tishi.tishi1="支持英文、数字、“-”、“_”的组合，4-20个字符";
-     }
+     },
+     upwd(){
+       this.show1=false;
+       this.pstyle.color="";
+       this.tishi.tishi2="支持英文、数字、“-”、“_”的组合，8-20个字符";
+     },
+     phone(){
+       this.show3=false;
+       this.phstyle.color="";
+       this.tishi.tishi4="手机符号为11位";
+     },
+     upwd1(){
+       this.show2=false;
+     },
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <a href class="logo"></a>
       <span class="login-w">欢迎登录</span>
       <div class="r-flo">
-        <a href>登录页面调查问卷</a>
+        <a href="javascript:;">登录页面调查问卷</a>
       </div>
     </div>
     <div class="hint">
@@ -33,17 +33,17 @@
                    </div>
                    <div class="input-p">
                        <label for="loginpass"></label>
-                       <input type="password" id="loginpass" placeholder="密码" v-model="pwd">
+                       <input type="password" id="loginpass" placeholder="密码" v-model="upwd">
                        <span class="clear_btn" v-show="show1" @click="clear1"></span>
                    </div>
-                   <div class="foget"><a href="">忘记密码</a></div>
+                   <div class="foget"><a href="javascript:;">忘记密码</a></div>
                    <a href="javascript:;" class="login-btn" @click="tologin">登&nbsp;&nbsp;录</a>
                </div>
                <div class="coagent">
                    <ul>
-                       <li><a href=""><b class="qq-icon"></b><span>QQ</span></a></li>
-                       <li><a href=""><b class="wx-icon"></b><span>微信</span></a></li>
-                       <li class="regist-link"><a href=""><b></b>立即注册</a></li>
+                       <li><a href="javascript:;"><b class="qq-icon"></b><span>QQ</span></a></li>
+                       <li><a href="javascript:;"><b class="wx-icon"></b><span>微信</span></a></li>
+                       <li class="regist-link"><router-link to="/reg"><b></b>立即注册</router-link></li>
                    </ul>
                </div>
             </div>
@@ -57,7 +57,7 @@ export default {
         return {
             msgerr:false,
             uname:"",
-            pwd:"",
+            upwd:"",
             show:false,
             show1:false,
             error:""
@@ -70,15 +70,32 @@ export default {
            }
         },
         clear1(){
-           if(this.pwd!==""){
-               this.pwd="";
+           if(this.upwd!==""){
+               this.upwd="";
            }
         },
         tologin(){
-           if(this.uname==""||this.pwd==""){
+           if(this.uname==""||this.upwd==""){
               this.msgerr=true;
               this.error="请输入用户名或密码"
           }
+          //发送ajax请求
+      var url = "login";
+      var obj = { uname: this.uname, upwd: this.upwd };
+      this.axios
+        .get(url, { params: obj })
+        .then(res => {
+          console.log(res);
+          if(res.data.code===1){
+              this.$router.push("/")
+          }else{
+              this.msgerr=true;
+              this.error="用户名或密码错误"
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
         },
     },
     watch:{
