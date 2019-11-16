@@ -82,8 +82,7 @@ export default {
           //发送ajax请求
       var url = "login";
       var obj = { uname: this.uname, upwd: this.upwd };
-      this.axios
-        .get(url, { params: obj })
+      this.axios.get(url, { params: obj })
         .then(res => {
           console.log(res);
           if(res.data.code===1){

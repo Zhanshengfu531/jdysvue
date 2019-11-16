@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import header from "./components/header"
 import Footer from "./components/Footer"
+import Qs from "qs"
 
 
 Vue.config.productionTip = false
